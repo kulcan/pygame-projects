@@ -1,10 +1,9 @@
 #https://es.wikipedia.org/wiki/P%C3%A9ndulo_doble
 
-from re import X
 import pygame
 import sys
 from math import sin, cos, pi
-pygame.font.init() 
+
 # constants set
 COLOR_WHITE = (255,255,255)
 COLOR_GREEN = (0,255,0)
@@ -15,6 +14,7 @@ ORIGIN = (0,0)
 
 # init
 pygame.init()
+pygame.font.init() 
 screen = pygame.display.set_mode((800, 500))
 clock = pygame.time.Clock()
 background = pygame.Surface((800,500))

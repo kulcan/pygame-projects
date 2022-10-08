@@ -2,7 +2,7 @@
 
 import pygame
 import sys
-from math import sin, cos, pi, pow
+from math import sin, cos, pi
 
 # constants set
 COLOR_WHITE = (255,255,255)

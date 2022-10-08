@@ -27,14 +27,11 @@ l2 = 100
 m1 = 10
 m2 = 10
 # angles
-a1 = pi/4
-a2 = pi/8
-# angles velocity
+a1 = pi/2
+a2 = pi/2
+# velocity
 a1_v = 0
 a2_v = 0
-
-a1_a = 0.001
-a2_a = 0.001
 # origin vector
 v0 = pygame.Vector2(400,250)
 
@@ -49,16 +46,19 @@ while True:
 	
 	num_1 = -G*(2*m1+m2)*sin(a1) - m2*G*sin(a1-2*a2) - 2*sin(a1-a2)*m2*((a2_v**2)*l2 + (a1_v**2)*l1*cos(a1-a2))
 	num_2 = 2*sin(a1-a2)*((a1_v**2)*l1*(m1+m2) + G*(m1+m2)*cos(a1) + (a2_v**2)*l2*m2*cos(a1-a2))
-	deno = l1*(2*m1 + m2 - m2*cos(2*a1-2*a2))
-	
-	a1_a = num_1/deno
-	a2_a = num_2/deno
-
+	deno = (2*m1 + m2 - m2*cos(2*a1-2*a2))
+	# acceleration
+	a1_a = num_1/(l1*deno)
+	a2_a = num_2/(l2*deno)
+	# velocity
 	a1_v += a1_a
 	a2_v += a2_a
+	# angle
+	a1 += a1_v
+	a2 += a2_v
 
-	a1 = (a1 + a1_v) % 2*pi
-	a2 = (a1 + a1_v) % 2*pi
+	#a1_v *= 0.9
+	#a2_v *= 0.9
 
 	v1 = pygame.Vector2(l1*sin(a1),l1*cos(a1)) + v0
 	v2 = pygame.Vector2(l2*sin(a2),l2*cos(a2)) + v1

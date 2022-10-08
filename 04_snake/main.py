@@ -44,7 +44,7 @@ class SnakeGame:
         self.food = 0
 
         self.head = Vector2(w/2,h/2)
-        print(self.head)
+
         self.snake = [
             self.head, 
             self.head - (BLOCK_SIZE,0),
@@ -52,7 +52,6 @@ class SnakeGame:
         ]
 
         self._place_food()
-        print(self.food)
 
     def _place_food(self):
         x = random.randint(0, ((self.w - BLOCK_SIZE)//BLOCK_SIZE))*BLOCK_SIZE

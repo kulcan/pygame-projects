@@ -1,36 +1,44 @@
+#https://es.wikipedia.org/wiki/P%C3%A9ndulo_doble
+
 import pygame
 import sys
-from math import sin, cos, pi
+from math import sin, cos, pi, pow
 
-
+# constants set
 COLOR_WHITE = (255,255,255)
 COLOR_GREEN = (0,255,0)
 COLOR_RED = (255,0,0)
 COLOR_BLUE = (0,0,255)
 COLOR_BLACK = (0,0,0)
 ORIGIN = (0,0)
+G = 1
 
+# init
 pygame.init()
 screen = pygame.display.set_mode((800, 500))
 clock = pygame.time.Clock()
 background = pygame.Surface((800,500))
 background.fill(COLOR_BLACK)
 
-
-
 # line lenght
 l1 = 100
 l2 = 100
-# mass of each circle
+# masses
 m1 = 10
 m2 = 10
 # angles
 a1 = pi/4
 a2 = pi/8
-# masses position
-v0 = pygame.Vector2(400,200)
+# angles velocity
+a1_v = 0
+a2_v = 0
 
+a1_a = 0.001
+a2_a = 0.001
+# origin vector
+v0 = pygame.Vector2(400,250)
 
+# loop
 while True:
 
 	events = pygame.event.get()
@@ -39,6 +47,19 @@ while True:
 			pygame.quit()
 			sys.exit()
 	
+	num_1 = -G*(2*m1+m2)*sin(a1) - m2*G*sin(a1-2*a2) - 2*sin(a1-a2)*m2*((a2_v**2)*l2 + (a1_v**2)*l1*cos(a1-a2))
+	num_2 = 2*sin(a1-a2)*((a1_v**2)*l1*(m1+m2) + G*(m1+m2)*cos(a1) + (a2_v**2)*l2*m2*cos(a1-a2))
+	deno = l1*(2*m1 + m2 - m2*cos(2*a1-2*a2))
+	
+	a1_a = num_1/deno
+	a2_a = num_2/deno
+
+	a1_v += a1_a
+	a2_v += a2_a
+
+	a1 = (a1 + a1_v) % 2*pi
+	a2 = (a1 + a1_v) % 2*pi
+
 	v1 = pygame.Vector2(l1*sin(a1),l1*cos(a1)) + v0
 	v2 = pygame.Vector2(l2*sin(a2),l2*cos(a2)) + v1
 
@@ -52,11 +73,8 @@ while True:
 	pygame.draw.circle(background, COLOR_GREEN, v1, 1, 0)
 	pygame.draw.circle(background, COLOR_RED, v2, 1, 0)
 	
-	a1 += 0.01
-	a2 += 0.1
-	
 	pygame.display.update()
-	clock.tick(30)
+	clock.tick(60)
 	screen.blit(background, ORIGIN)
 	
 	

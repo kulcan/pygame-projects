@@ -37,9 +37,9 @@ while True:
             sys.exit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                N -= 1
-            if event.key == pygame.K_DOWN:
                 N += 1
+            if event.key == pygame.K_DOWN:
+                N -= 1
 
     text = my_font.render("N="+str(N), True, COLOR_WHITE)
     screen.blit(text, (50, 50))

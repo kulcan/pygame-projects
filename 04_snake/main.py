@@ -3,7 +3,6 @@ import pygame
 from pygame import Vector2
 import random
 from enum import Enum
-from collections import namedtuple
 
 pygame.init()
 pygame.font.init()
